@@ -2,9 +2,9 @@ package org.example.outbox.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.outbox.domain.model.Order;
-import org.example.outbox.persistence.repository.OrderRepository;
-import org.example.outbox.service.OrderService;
+import org.example.outbox.domain.model.Product;
+import org.example.outbox.persistence.repository.ProductRepository;
+import org.example.outbox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,27 +15,26 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService {
+public class ProductServiceImpl implements ProductService {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
     @Override
-    public Optional<Order> findById(Long id) {
-        return orderRepository.findById(id);
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
     }
 
     @Transactional
     @Override
-    public Order save(Order order) {
-        // TODO: DTO
-        return orderRepository.save(order);
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 }
