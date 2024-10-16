@@ -1,27 +1,32 @@
 package org.example.outbox.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.outbox.domain.model.Order;
+import org.example.outbox.persistence.repository.OrderRepository;
 import org.example.outbox.service.OrderService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
+@Slf4j
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private Set<Order> orders = new HashSet<>();
+    private OrderRepository orderRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Order> findById(Long id) {
-        return this.orders.stream().filter(o -> Objects.equals(o.getId(), id)).findFirst();
+        return orderRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public Order save(Order order) {
-        Optional<Order> existingOrder = this.findById(order.getId());
-        existingOrder.ifPresent(value -> this.orders.remove(value));
-        this.orders.add(order);
-        return order;
+        // TODO: DTO
+        return orderRepository.save(order);
     }
 }
