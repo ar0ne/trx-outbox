@@ -1,4 +1,4 @@
-package org.example.outbox.web.dto;
+package org.example.outbox.dto;
 
 import org.example.outbox.domain.model.Order;
 import org.example.outbox.domain.model.OrderStatus;

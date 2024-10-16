@@ -1,16 +1,15 @@
 package org.example.outbox.service;
 
-import org.example.outbox.domain.model.Order;
+import org.example.outbox.dto.OrderDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
 
-    Optional<Order> findById(Long id);
+    OrderDto findById(Long id);
 
-    List<Order> findAll();
+    List<OrderDto> findAll();
 
-    Order save(Order order);
+    OrderDto save(OrderDto order);
 
 }
