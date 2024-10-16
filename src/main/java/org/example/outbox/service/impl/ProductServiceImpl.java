@@ -39,6 +39,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto save(ProductDto dto) {
         Product product = ProductDto.Mapper.toModel(dto);
+        product.setId(null);
         return ProductDto.Mapper.toDto(productRepository.save(product));
+    }
+
+    @Override
+    public ProductDto updateProduct(Long id, Product product) {
+        return productRepository.findById(id)
+                .map(base -> updateFields(base, product))
+                .map(productRepository::save)
+                .map(ProductDto.Mapper::toDto)
+                .orElseThrow(() -> new OutboxException("Can not find product with ID " + id));
+    }
+
+    private Product updateFields(Product base, Product updatedProduct) {
+        base.setDescription(updatedProduct.getDescription());
+        base.setName(updatedProduct.getName());
+        return base;
     }
 }
