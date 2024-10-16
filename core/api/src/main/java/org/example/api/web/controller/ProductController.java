@@ -1,4 +1,4 @@
-package org.example.web.controller;
+package org.example.api.web.controller;
 
 import org.example.domain.model.Product;
 import org.example.dto.ProductDto;

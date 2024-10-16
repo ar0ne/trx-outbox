@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,14 +50,14 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public OrderDto save(OrderDto dto) {
-        final Order order = OrderDto.Mapper.toModel(dto);
-        order.setId(null);
-        order.setCreated(LocalDateTime.now());
-        order.setStatus(OrderStatus.CREATED);
-        order.setUuid(UUID.randomUUID().toString());
         Set<Long> productIds = dto.products().stream().map(ProductDto::id).collect(Collectors.toSet());
         Set<Product> products = new HashSet<>(productRepository.findAllById(productIds));
-        order.setProducts(products);
+        final Order order = Order.builder()
+                .id(null)
+                .status(OrderStatus.CREATED)
+                .created(LocalDateTime.now())
+                .products(products)
+                .build();
         return OrderDto.Mapper.toDto(orderRepository.save(order));
     }
 }

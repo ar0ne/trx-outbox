@@ -1,7 +1,6 @@
-package org.example.web.controller;
+package org.example.api.web.controller;
 
 import jakarta.validation.Valid;
-import org.example.domain.model.OrderStatus;
 import org.example.dto.NewOrderDto;
 import org.example.dto.ProductDto;
 import org.example.service.OrderService;
@@ -41,7 +40,7 @@ public class OrderController {
         final Set<ProductDto> productsDto = newOrderDto.products().stream()
                 .map(id -> new ProductDto(id, null, null))
                 .collect(Collectors.toSet());
-        final OrderDto dto = new OrderDto(null, null, null, OrderStatus.CREATED, productsDto);
+        final OrderDto dto = new OrderDto(null, null, null, null, productsDto);
         return orderService.save(dto);
     }
 }
