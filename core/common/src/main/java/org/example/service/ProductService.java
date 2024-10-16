@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.domain.model.Product;
+import org.example.persistence.model.Product;
 import org.example.dto.ProductDto;
 
 import java.util.List;

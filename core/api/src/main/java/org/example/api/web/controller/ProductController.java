@@ -1,6 +1,6 @@
 package org.example.api.web.controller;
 
-import org.example.domain.model.Product;
+import org.example.persistence.model.Product;
 import org.example.dto.ProductDto;
 import org.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

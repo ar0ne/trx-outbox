@@ -1,6 +1,7 @@
-package org.example.domain.model;
+package org.example.persistence.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,8 @@ public class Order {
     private Long id;
 
     @Builder.Default
+    @NotBlank
+    @Column(unique = true)
     private String uuid = UUID.randomUUID().toString();
 
     private LocalDateTime created;

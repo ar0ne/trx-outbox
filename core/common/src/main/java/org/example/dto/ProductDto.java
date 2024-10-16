@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import org.example.domain.model.Product;
+import org.example.persistence.model.Product;
 
 import static java.util.Objects.isNull;
 

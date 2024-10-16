@@ -2,16 +2,18 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.domain.model.Order;
-import org.example.domain.model.OrderStatus;
-import org.example.domain.model.Product;
+import org.example.persistence.model.Order;
+import org.example.persistence.model.OrderStatus;
+import org.example.persistence.model.Product;
 import org.example.dto.OrderDto;
 import org.example.dto.ProductDto;
 import org.example.exception.OutboxException;
+import org.example.persistence.model.event.OrderCreated;
 import org.example.persistence.repository.OrderRepository;
 import org.example.persistence.repository.ProductRepository;
 import org.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
     private ProductRepository productRepository;
 
     @Transactional(readOnly = true)
@@ -38,6 +43,14 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findById(id)
                 .map(OrderDto.Mapper::toDto)
                 .orElseThrow(() -> new OutboxException("Can not find Order with id " + id));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public OrderDto findByUuid(String uuid) {
+        return orderRepository.findByUuid(uuid)
+                .map(OrderDto.Mapper::toDto)
+                .orElseThrow(() -> new OutboxException("Can not find Order with uuid " + uuid));
     }
 
     @Transactional(readOnly = true)
@@ -58,6 +71,8 @@ public class OrderServiceImpl implements OrderService {
                 .created(LocalDateTime.now())
                 .products(products)
                 .build();
-        return OrderDto.Mapper.toDto(orderRepository.save(order));
+        final Order newOrder = orderRepository.save(order);
+        applicationEventPublisher.publishEvent(new OrderCreated(order.getId()));
+        return OrderDto.Mapper.toDto(newOrder);
     }
 }

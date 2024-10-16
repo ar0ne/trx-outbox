@@ -2,7 +2,7 @@ package org.example.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.domain.model.Product;
+import org.example.persistence.model.Product;
 import org.example.dto.ProductDto;
 import org.example.exception.OutboxException;
 import org.example.persistence.repository.ProductRepository;

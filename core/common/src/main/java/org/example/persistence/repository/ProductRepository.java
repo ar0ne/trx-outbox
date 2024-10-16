@@ -1,6 +1,6 @@
 package org.example.persistence.repository;
 
-import org.example.domain.model.Product;
+import org.example.persistence.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

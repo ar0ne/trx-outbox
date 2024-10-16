@@ -8,6 +8,8 @@ public interface OrderService {
 
     OrderDto findById(Long id);
 
+    OrderDto findByUuid(String uuid);
+
     List<OrderDto> findAll();
 
     OrderDto save(OrderDto order);

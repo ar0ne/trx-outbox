@@ -1,7 +1,7 @@
 package org.example.dto;
 
-import org.example.domain.model.Order;
-import org.example.domain.model.OrderStatus;
+import org.example.persistence.model.Order;
+import org.example.persistence.model.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.Set;
