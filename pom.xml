@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>17</java.version>
+        <jackson.version>2.16.1</jackson.version>
         <lombok.version>1.18.34</lombok.version>
         <common.version>0.0.1</common.version>
         <api.version>0.0.1</api.version>
@@ -26,6 +27,22 @@
         <dependencies>
 
             <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.example</groupId>
                 <artifactId>common</artifactId>
                 <version>${common.version}</version>
@@ -33,13 +50,13 @@
 
             <dependency>
                 <groupId>org.example</groupId>
-                <artifactId>api</artifactId>
+                <artifactId>orders-service</artifactId>
                 <version>${api.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.example</groupId>
-                <artifactId>consumer</artifactId>
+                <artifactId>warehouse-service</artifactId>
                 <version>${consumer.version}</version>
             </dependency>
 

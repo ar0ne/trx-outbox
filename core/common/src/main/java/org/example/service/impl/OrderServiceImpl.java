@@ -4,20 +4,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.persistence.model.Order;
 import org.example.persistence.model.OrderStatus;
+import org.example.persistence.model.OutboxEvent;
 import org.example.persistence.model.Product;
 import org.example.dto.OrderDto;
 import org.example.dto.ProductDto;
 import org.example.exception.OutboxException;
-import org.example.persistence.model.event.OrderCreated;
 import org.example.persistence.repository.OrderRepository;
+import org.example.persistence.repository.OutboxEventRepository;
 import org.example.persistence.repository.ProductRepository;
 import org.example.service.OrderService;
+import org.example.utils.SerializationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,10 +32,13 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
+    private ProductRepository productRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private OutboxEventRepository outboxRepository;
+
+    @Autowired
+    private SerializationHelper serializationHelper;
 
     @Transactional(readOnly = true)
     @Override
@@ -63,16 +66,19 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public OrderDto save(OrderDto dto) {
-        Set<Long> productIds = dto.products().stream().map(ProductDto::id).collect(Collectors.toSet());
-        Set<Product> products = new HashSet<>(productRepository.findAllById(productIds));
+        final Set<Long> productIds = dto.products().stream().map(ProductDto::id).collect(Collectors.toSet());
+        final Set<Product> products = new HashSet<>(productRepository.findAllById(productIds));
         final Order order = Order.builder()
-                .id(null)
                 .status(OrderStatus.CREATED)
-                .created(LocalDateTime.now())
                 .products(products)
                 .build();
         final Order newOrder = orderRepository.save(order);
-        applicationEventPublisher.publishEvent(new OrderCreated(order.getId()));
+        final OutboxEvent outboxEvent = OutboxEvent.builder()
+                .type(OutboxEvent.EventType.CREATED)
+                .payloadType(newOrder.getClass().getSimpleName())
+                .payload(serializationHelper.toJson(newOrder))
+                .build();
+        outboxRepository.save(outboxEvent);
         return OrderDto.Mapper.toDto(newOrder);
     }
 }

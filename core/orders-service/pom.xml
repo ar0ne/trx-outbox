@@ -8,12 +8,18 @@
         <version>0.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>consumer</artifactId>
+    <artifactId>orders-service</artifactId>
     <version>0.0.1</version>
-    <name>Consumer</name>
-    <description>Consumer</description>
+    <name>Orders Service</name>
+    <description>Orders service</description>
 
     <dependencies>
+
+        <!-- web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.example</groupId>
@@ -51,4 +57,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

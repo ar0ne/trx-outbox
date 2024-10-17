@@ -1,7 +1,9 @@
 package org.example.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.example.persistence.model.Order;
 import org.example.persistence.model.OrderStatus;
+import static org.example.constants.CommonConstants.ISO_DATE_TIME_PATTERN;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,7 +16,11 @@ public record OrderDto ( // @formatter:off
 
     String uuid,
 
-    LocalDateTime created,
+    @JsonFormat(pattern = ISO_DATE_TIME_PATTERN)
+    LocalDateTime createdAt,
+
+    @JsonFormat(pattern = ISO_DATE_TIME_PATTERN)
+    LocalDateTime updatedAt,
 
     OrderStatus status,
 
@@ -29,7 +35,7 @@ public record OrderDto ( // @formatter:off
             Set<ProductDto> productsDto = order.getProducts().stream()
                     .map(ProductDto.Mapper::toDto)
                     .collect(Collectors.toSet());
-            return new OrderDto(order.getId(), order.getUuid(), order.getCreated(), order.getStatus(), productsDto);
+            return new OrderDto(order.getId(), order.getUuid(), order.getCreatedAt(), order.getUpdatedAt(), order.getStatus(), productsDto);
         }
 
         public static Order toModel(OrderDto dto) {
@@ -40,7 +46,8 @@ public record OrderDto ( // @formatter:off
             return Order.builder()
                     .id(dto.id())
                     .uuid(dto.uuid())
-                    .created(dto.created())
+                    .createdAt(dto.createdAt())
+                    .updatedAt(dto.updatedAt())
                     .status(dto.status())
                     .build();
         }

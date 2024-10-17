@@ -8,18 +8,12 @@
         <version>0.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>api</artifactId>
+    <artifactId>warehouse-service</artifactId>
     <version>0.0.1</version>
-    <name>Api</name>
-    <description>Outbox Api</description>
+    <name>Warehouse Service</name>
+    <description>Warehouse service</description>
 
     <dependencies>
-
-        <!-- web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.example</groupId>
@@ -57,5 +51,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

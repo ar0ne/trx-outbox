@@ -40,7 +40,7 @@ public class OrderController {
         final Set<ProductDto> productsDto = newOrderDto.products().stream()
                 .map(id -> new ProductDto(id, null, null))
                 .collect(Collectors.toSet());
-        final OrderDto dto = new OrderDto(null, null, null, null, productsDto);
+        final OrderDto dto = new OrderDto(null, null, null, null, null, productsDto);
         return orderService.save(dto);
     }
 }
