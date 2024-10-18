@@ -22,7 +22,7 @@ public class OutboxEventListener {
     @Autowired
     private TransactionsHelper transactionsHelper;
 
-    @Scheduled(fixedRate = 10_000)
+    @Scheduled(initialDelay = 10_1000, fixedRate = 10_000)
     public void pullOutboxEvents() {
         log.info("Pull outbox event table");
         transactionsHelper.doInTransaction(callback -> {
