@@ -57,13 +57,11 @@
                 <artifactId>common</artifactId>
                 <version>${common.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.example</groupId>
                 <artifactId>orders-service</artifactId>
                 <version>${api.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.example</groupId>
                 <artifactId>warehouse-service</artifactId>

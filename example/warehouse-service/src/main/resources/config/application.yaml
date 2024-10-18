@@ -1,2 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/outbox
+    username: outbox
+    password: 12345
+
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+
 server:
-  port: 8081
+  error:
+    include-message: always
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
