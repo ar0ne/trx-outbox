@@ -1,0 +1,73 @@
+---
+services:
+
+#  orders_service:
+#
+#  outbox_consumer:
+#
+#  warehouse_service:
+
+  outboxdb:
+    container_name: postgres
+    image: postgres
+    shm_size: 1G
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: outbox
+      POSTGRES_USER: outbox
+      POSTGRES_PASSWORD: 12345
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    volumes:
+      - .pg-oper-data:/var/lib/postgresql/data
+    networks:
+      postgres_network:
+
+#  zookeeper:
+#    container_name: anyway-zookeeper
+#    image: confluentinc/cp-zookeeper:7.4.1
+#    user: root
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#      ALLOW_ANONYMOUS_LOGIN: yes
+#    ports:
+#      - "2181:2181"
+#    restart: unless-stopped
+#    networks:
+#      - kafka_network
+#    volumes:
+#      - ".kafka-data/zookeeper:/var/lib/zookeeper"
+#
+#  kafka1:
+#    container_name: anyway-kafka1
+#    image: confluentinc/cp-kafka:7.4.1
+#    user: root
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - "29092:29092"
+#      - "1079:1079"
+#    restart: unless-stopped
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
+#      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:29092,INTERNAL://kafka1:9092
+#      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+#      KAFKA_HEAP_OPTS: "-Xmx512M -Xms512M"
+#      KAFKA_JMX_HOSTNAME: localhost
+#      KAFKA_JMX_PORT: 1079
+#      KAFKA_JMX_OPT: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost"
+#    networks:
+#      - kafka_network
+#    volumes:
+#      - ".kafka-data/kafka1:/var/lib/kafka/data"
+
+networks:
+  kafka_network:
+  postgres_network:

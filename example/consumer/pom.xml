@@ -14,12 +14,14 @@
     <description>Outbox consumer</description>
 
     <dependencies>
-
-        <!-- web -->
-
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
 
         <!-- test -->

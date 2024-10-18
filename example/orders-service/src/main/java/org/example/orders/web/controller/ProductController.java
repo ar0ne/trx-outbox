@@ -1,4 +1,4 @@
-package org.example.api.web.controller;
+package org.example.orders.web.controller;
 
 import org.example.persistence.model.Product;
 import org.example.dto.ProductDto;

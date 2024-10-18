@@ -1,4 +1,4 @@
-package org.example.api.web.controller;
+package org.example.orders.web.controller;
 
 import jakarta.validation.Valid;
 import org.example.dto.NewOrderDto;

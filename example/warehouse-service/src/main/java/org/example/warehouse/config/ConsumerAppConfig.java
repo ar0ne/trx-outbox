@@ -1,4 +1,4 @@
-package org.example.consumer.config;
+package org.example.warehouse.config;
 
 import org.springframework.context.annotation.Configuration;
 

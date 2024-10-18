@@ -1,4 +1,4 @@
-package org.example.api.web;
+package org.example.orders.web;
 
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
