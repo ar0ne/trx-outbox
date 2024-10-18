@@ -1,3 +1,8 @@
 databaseChangeLog:
+  # schema
   - include:
-      file: db/changelog/changelog-1.yaml
+      file: db/changelog/tables/changelog.yaml
+
+  # load data
+  - include:
+      file: db/changelog/data/mock-data.yaml

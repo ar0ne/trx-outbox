@@ -1,0 +1,147 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: Create table product
+      author: Dev
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: product
+      changes:
+      - createTable:
+          tableName: product
+          columns:
+            - column:
+                autoIncrement: true
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: productPK
+                name: id
+                type: BIGINT
+            - column:
+                name: description
+                type: VARCHAR(255)
+            - column:
+                constraints:
+                  nullable: false
+                name: name
+                type: VARCHAR(255)
+  - changeSet:
+     id: Create table order
+     author: Dev
+     preConditions:
+       - onFail: MARK_RAN
+         not:
+           tableExists:
+             tableName: order
+     changes:
+       - createTable:
+           tableName: order
+           columns:
+             - column:
+                 autoIncrement: true
+                 constraints:
+                   nullable: false
+                   primaryKey: true
+                   primaryKeyName: orderPK
+                 name: id
+                 type: BIGINT
+             - column:
+                 name: created_at
+                 type: TIMESTAMP(6) WITHOUT TIME ZONE
+             - column:
+                 name: status
+                 type: SMALLINT
+             - column:
+                 name: updated_at
+                 type: TIMESTAMP(6) WITHOUT TIME ZONE
+             - column:
+                 name: uuid
+                 type: VARCHAR(255)
+
+  - changeSet:
+      id: Create table order_product
+      author: Dev
+      changes:
+        - createTable:
+            tableName: order_product
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_productPK
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_productPK
+                  name: product_id
+                  type: BIGINT
+
+  - changeSet:
+      id: Create table outbox event
+      author: Dev
+      changes:
+        - createTable:
+            tableName: outbox_event
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: outbox_eventPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP(6) WITHOUT TIME ZONE
+              - column:
+                  name: payload
+                  type: VARCHAR(1000)
+              - column:
+                  name: payload_type
+                  type: VARCHAR(255)
+              - column:
+                  name: type
+                  type: SMALLINT
+
+  - changeSet:
+      id: Add unique constraint for order.uuid
+      author: Dev
+      changes:
+        - addUniqueConstraint:
+            columnNames: uuid
+            constraintName: UC_ORDERUUID_COL
+            tableName: order
+  - changeSet:
+      id: Add fk constraint for order_product.order_id
+      author: Dev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_product
+            constraintName: FKb3sm2umdh0yd7jwrnda0qixd0
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: order
+            validate: true
+  - changeSet:
+      id: Add fk constraint for order_product.product_id
+      author: Dev
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: order_product
+            constraintName: FKhnfgqyjx3i80qoymrssls3kno
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: product
+            validate: true

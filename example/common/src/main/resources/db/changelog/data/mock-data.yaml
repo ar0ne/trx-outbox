@@ -1,0 +1,37 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: Insert mock data for local testing
+      author: Dev
+      context: dev
+      runAlways: true
+      validCheckSum:
+        - ANY
+      changes:
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: name
+                  value: Pen
+              - column:
+                  name: description
+                  value: Gel pen
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: name
+                  value: Black Pen
+              - column:
+                  name: description
+                  value: Black regular pen
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: name
+                  value: Marker
+              - column:
+                  name: description
+                  value: Yellow marker highlighter
