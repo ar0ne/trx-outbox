@@ -25,6 +25,7 @@ logging:
         SQL: DEBUG
 
 outbox:
+  batch-size: 10
   pull-outbox-events-rate: 5000
   kafka-defaults:
     topic-name: messages

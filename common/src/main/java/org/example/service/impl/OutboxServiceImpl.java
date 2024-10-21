@@ -6,10 +6,10 @@ import org.example.persistence.model.OutboxEvent;
 import org.example.persistence.repository.OutboxEventRepository;
 import org.example.service.OutboxService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -21,8 +21,8 @@ public class OutboxServiceImpl implements OutboxService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OutboxEvent> findAllByOrderByIdAsc() {
-        return outboxEventRepository.findAllByOrderByIdAsc();
+    public Page<OutboxEvent> findAllByOrderByIdAsc(Pageable pageable) {
+        return outboxEventRepository.findAllByOrderByIdAsc(pageable);
     }
 
     @Transactional

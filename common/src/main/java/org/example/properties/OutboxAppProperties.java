@@ -7,5 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class OutboxAppProperties {
     private Long pullOutboxEventsRate;
+    private Integer batchSize;
     private KafkaDefaults kafkaDefaults;
 }

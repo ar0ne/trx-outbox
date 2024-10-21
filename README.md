@@ -29,6 +29,6 @@ Finally, "warehouse-service" listens to new messages from Kafka.
 
 `$ make libs` - to package apps.
 
-`$ docker-compose up -d` - to run postgresql and kafka/zookeeper in docker.
+`$ docker-compose up` - to run postgresql and kafka/zookeeper in docker.
 
-`$ java -Dspring.profiles.active=dev -jar *.jar` - to run spring boot application.
+`$ java -Dspring.profiles.active=dev -jar <your-application>.jar` - to run spring boot application.
