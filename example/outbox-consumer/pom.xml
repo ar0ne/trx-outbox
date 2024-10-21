@@ -8,10 +8,10 @@
         <version>0.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>consumer</artifactId>
+    <artifactId>outbox-consumer</artifactId>
     <version>0.0.1</version>
-    <name>Consumer</name>
-    <description>Outbox consumer</description>
+    <name>Outbox Consumer</name>
+    <description>Outbox consumer application</description>
 
     <dependencies>
         <dependency>
