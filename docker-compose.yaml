@@ -23,7 +23,7 @@ services:
       - "-c"
       - "wal_level=logical"
     volumes:
-      - .pg-oper-data:/var/lib/postgresql/data
+      - .pg-data:/var/lib/postgresql/data
     networks:
       postgres_network:
 

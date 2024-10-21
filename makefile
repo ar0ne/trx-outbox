@@ -1,8 +1,8 @@
 LIBS := \
-    example/common \
-    example/orders-service \
-    example/consumer \
-    example/warehouse-service
+    common \
+    orders-service \
+    outbox-consumer \
+    warehouse-service
 
 clean: $(addsuffix _clean, $(LIBS))
 
