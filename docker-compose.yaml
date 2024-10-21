@@ -1,12 +1,5 @@
 ---
 services:
-
-#  orders_service:
-#
-#  outbox_consumer:
-#
-#  warehouse_service:
-
   outboxdb:
     container_name: postgres
     image: postgres
