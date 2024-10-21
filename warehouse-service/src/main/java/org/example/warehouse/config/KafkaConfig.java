@@ -2,6 +2,7 @@ package org.example.warehouse.config;
 
 import lombok.RequiredArgsConstructor;
 import org.example.constants.DefaultKafkaProperties;
+import org.example.properties.OutboxAppProperties;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +21,15 @@ public class KafkaConfig {
 
     private final KafkaProperties kafkaProperties;
 
+    private final OutboxAppProperties appProperties;
+
     @Bean
     KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(3);
-        factory.getContainerProperties().setPollTimeout(3000);
+        factory.setConcurrency(appProperties.getKafkaDefaults().getTopicPartitionsNumber());
+        factory.getContainerProperties().setPollTimeout(appProperties.getKafkaDefaults().getPollTimeout());
         return factory;
     }
 
@@ -34,6 +37,5 @@ public class KafkaConfig {
     public ConsumerFactory<Integer, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(DefaultKafkaProperties.getConsumerProperties(kafkaProperties, "outbox"));
     }
-
 
 }

@@ -30,4 +30,5 @@ outbox:
     topic-name: messages
     topic-replication-factor: 3
     topic-partitions-number: 3
+    poll-timeout: 3000
     linger-ms: 20
